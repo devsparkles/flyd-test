@@ -1,5 +1,6 @@
-package com.devsparkle.flydapp.presentation.framework.error
+package com.devsparkle.flydapp.data.error
 
+import com.devsparkle.flydapp.data.error.mapper.ErrorMapper
 import javax.inject.Inject
 
 class ErrorManager @Inject constructor(private val errorMapper: ErrorMapper) : ErrorFactory {

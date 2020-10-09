@@ -5,7 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.devsparkle.flydapp.data.local.entities.AlbumEntity
 import com.devsparkle.flydapp.data.local.entities.ArtistEntity
-import com.devsparkle.flydapp.data.local.entities.dao.AlbumDao
+import com.devsparkle.flydapp.data.local.dao.AlbumDao
+import com.devsparkle.flydapp.data.local.dao.ArtistDao
 import com.devsparkle.flydapp.data.local.shared.DateConverter
 import com.devsparkle.flydapp.data.local.shared.DateToStringConverter
 
@@ -18,4 +19,5 @@ import com.devsparkle.flydapp.data.local.shared.DateToStringConverter
 @TypeConverters(DateConverter::class, DateToStringConverter::class)
 abstract class FlydDatabase : RoomDatabase() {
     abstract fun albumDao(): AlbumDao
+    abstract fun artistDao(): ArtistDao
 }

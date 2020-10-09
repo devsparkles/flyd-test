@@ -6,14 +6,15 @@ import com.devsparkle.flydapp.databinding.AlbumViewBinding
 import com.devsparkle.flydapp.domain.dto.AlbumDTO
 import com.devsparkle.flydapp.presentation.features.album.listener.RecyclerItemListener
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.album_view.view.tv_album_artist
 
 class AlbumViewHolder(private val itemBinding: AlbumViewBinding) : RecyclerView.ViewHolder(itemBinding.root) {
 
     fun bind(albumItem: AlbumDTO, recyclerItemListener: RecyclerItemListener) {
-        itemBinding.ivAlbumCover.text = albumItem.description
-        itemBinding.tvName.text = albumItem.name
-        Picasso.get().load(albumItem.thumb).placeholder(R.drawable.ic_healthy_food).error(R.drawable.ic_healthy_food).into(itemBinding.ivAlbumCover)
-        itemBinding.rlRecipeItem.setOnClickListener { recyclerItemListener.onItemSelected(albumItem) }
+        itemBinding.tvAlbumArtist.text = albumItem.artist
+        itemBinding.tvAlbumTitle.text = albumItem.title
+        Picasso.get().load(albumItem.coverImageUrl).placeholder(R.drawable.ic_placeholder).error(R.drawable.ic_error_placholder).into(itemBinding.ivAlbumCover)
+        itemBinding.albumLine.setOnClickListener { recyclerItemListener.onItemSelected(albumItem) }
     }
 }
 

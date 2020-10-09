@@ -6,6 +6,7 @@
 
 
     <string name="title_action_bar_album">Album List</string>
+    <string name="title_action_bar_artist">Artist List</string>
 
 
     <string name="no_internet">Please check your internet connection</string>

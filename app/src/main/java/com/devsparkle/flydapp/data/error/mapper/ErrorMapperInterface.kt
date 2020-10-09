@@ -1,4 +1,4 @@
-package com.devsparkle.flydapp.presentation.framework.error
+package com.devsparkle.flydapp.data.error.mapper
 
 interface ErrorMapperInterface {
     fun getErrorString(errorId: Int): String

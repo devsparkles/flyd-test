@@ -1,7 +1,11 @@
-package com.devsparkle.flydapp.presentation.framework.error
+package com.devsparkle.flydapp.data.error.mapper
 
 import com.devsparkle.flydapp.FlydApplication
 import com.devsparkle.flydapp.R
+import com.devsparkle.flydapp.data.error.NETWORK_ERROR
+import com.devsparkle.flydapp.data.error.NO_INTERNET_CONNECTION
+import com.devsparkle.flydapp.data.error.SEARCH_ERROR
+
 import javax.inject.Inject
 
 class ErrorMapper @Inject constructor() : ErrorMapperInterface {

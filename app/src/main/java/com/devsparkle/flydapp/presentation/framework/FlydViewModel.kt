@@ -1,10 +1,6 @@
 package com.devsparkle.flydapp.presentation.framework
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import com.devsparkle.flydapp.FlydApplication
-import com.devsparkle.flydapp.presentation.framework.error.ErrorManager
-import com.devsparkle.flydapp.presentation.framework.error.ErrorMapper
+import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
@@ -13,14 +9,10 @@ import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 
-open class FlydViewModel(application: Application) :
-    AndroidViewModel(application) {
+open class FlydViewModel :
+    ViewModel() {
 
-    protected val application: FlydApplication = getApplication()
-
-    val errorManager: ErrorManager = ErrorManager(ErrorMapper())
-
-    // NetWork call manangement
+    // NetWork call queue via rxjava
     private val disposable: CompositeDisposable =
         CompositeDisposable()
 

@@ -1,4 +1,4 @@
-package com.devsparkle.flydapp.data.local.entities.dao
+package com.devsparkle.flydapp.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Query
@@ -20,6 +20,6 @@ interface ArtistDao : BaseDao<ArtistEntity> {
     @Query("SELECT count(*) FROM artists")
     fun getCount(): Single<Int>
 
-    @Query("SELECT * FROM artists")
-    fun getTokens(): Flowable<List<ArtistEntity>>
+    @Query("SELECT * FROM artists where name=:name")
+    fun getArtistsByName(name: String): Flowable<List<ArtistEntity>>
 }

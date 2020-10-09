@@ -8,21 +8,11 @@ import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity() {
 
-    lateinit var searchComponent: SearchComponent
-
     @Inject
     lateinit var searchViewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        searchComponent = (application as FlydApplication).appComponent
-            .searchComponent().create()
-
-        searchComponent.inject(this)
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
-        searchViewModel.getFirstPage("a") // search "a"
     }
 }

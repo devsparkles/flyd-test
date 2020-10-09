@@ -1,6 +1,7 @@
 package com.devsparkle.flydapp.data.remote
 
 import com.devsparkle.flydapp.BuildConfig
+import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.Response
 

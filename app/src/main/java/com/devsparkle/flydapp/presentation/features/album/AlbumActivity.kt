@@ -14,7 +14,6 @@ import com.devsparkle.flydapp.presentation.features.shared.ViewModelFactory
 import com.devsparkle.flydapp.utils.observe
 import com.devsparkle.flydapp.utils.toGone
 import com.devsparkle.flydapp.utils.toVisible
-import java.util.Collections
 import javax.inject.Inject
 
 class AlbumActivity : BaseActivity() {
@@ -24,7 +23,6 @@ class AlbumActivity : BaseActivity() {
     @Inject
     lateinit var albumViewModel: AlbumViewModel
 
-    lateinit var albumComponent: AlbumComponent
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -38,17 +36,10 @@ class AlbumActivity : BaseActivity() {
     }
 
     override fun initializeViewModel() {
-        albumViewModel = viewModelFactory.create(AlbumViewModel::class.java)
+         albumViewModel = viewModelFactory.create(AlbumViewModel::class.java)
     }
 
 
-
-    override fun daggerInjection() {
-        albumComponent = (application as FlydApplication).appComponent
-            .albumComponent().create()
-
-        albumComponent.inject(this)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +47,9 @@ class AlbumActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvAlbums.layoutManager = layoutManager
         binding.rvAlbums.setHasFixedSize(true)
-        albumViewModel.getAlbumsFirstPage()
+        albumViewModel.getAlbums()
+        albumViewModel.fetchAlbumByName("a")
+
     }
 
     private fun showDataView(show: Boolean) {
@@ -65,35 +58,16 @@ class AlbumActivity : BaseActivity() {
         binding.pbLoading.toGone()
     }
 
-
     private fun showLoadingView() {
         binding.pbLoading.toVisible()
         binding.tvNoData.toGone()
         binding.rvAlbums.toGone()
-
-
     }
 
-    fun getMaxElementIndexes(a: Array<Int>, rotate: Array<Int>): Array<Int> {
-        // Write your code here
-
-        val result = IntArray(a.size)
-        for (x in rotate.indices step 1){
-            val temp = a.toMutableList()
-            Collections.rotate(temp, rotate[x])
-            result[x] = (temp.indexOf(temp.maxOrNull()))
-
-        }
-        return result.toTypedArray();
+    private fun bindListData(albums: List<AlbumDTO>) {
     }
 
-
-    private fun bindListData(albums: AlbumDTO) {
-
-
-    }
-
-    private fun handleAlbumsList(status: Resource<AlbumDTO>) {
+    private fun handleAlbumsList(status: Resource<List<AlbumDTO>>) {
         when (status) {
             is Resource.Loading -> showLoadingView()
             is Resource.Success -> status.data?.let { bindListData(albums = it) }
@@ -104,10 +78,8 @@ class AlbumActivity : BaseActivity() {
         }
     }
 
-
     override fun observeViewModel() {
         observe(albumViewModel.albumsLiveData, ::handleAlbumsList)
     }
-
 }
 

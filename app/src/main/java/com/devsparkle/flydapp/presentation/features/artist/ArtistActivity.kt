@@ -1,28 +1,38 @@
 package com.devsparkle.flydapp.presentation.features.artist
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.devsparkle.flydapp.FlydApplication
 import com.devsparkle.flydapp.R
+import com.devsparkle.flydapp.databinding.ActivityArtistBinding
+import com.devsparkle.flydapp.presentation.features.shared.BaseActivity
+import com.devsparkle.flydapp.presentation.features.shared.ViewModelFactory
 import javax.inject.Inject
 
-class ArtistActivity : AppCompatActivity() {
+class ArtistActivity : BaseActivity() {
 
-    lateinit var artistComponent: ArtistComponent
+    private lateinit var binding: ActivityArtistBinding
 
     @Inject
     lateinit var artistViewModel: ArtistViewModel
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    override fun initViewBinding() {
+        binding = ActivityArtistBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+    }
+
+    override fun initializeViewModel() {
+        artistViewModel = viewModelFactory.create(ArtistViewModel::class.java)
+    }
+
+    override fun observeViewModel() {
+        TODO("Not yet implemented")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        artistComponent = (application as FlydApplication).appComponent
-            .artistComponent().create()
-
-        artistComponent.inject(this)
-
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_artist)
-
-        artistViewModel.getFirstPage("a") // search "a"
+        supportActionBar?.title = getString(R.string.title_action_bar_artist)
     }
 }

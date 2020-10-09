@@ -1,27 +1,31 @@
 package com.devsparkle.flydapp
 
-import android.app.Application
 import android.content.Context
-import com.devsparkle.flydapp.di.AppComponent
+import androidx.multidex.MultiDex
+import androidx.multidex.MultiDexApplication
 import com.devsparkle.flydapp.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
+import javax.inject.Inject
 
-class FlydApplication : Application() {
+class FlydApplication : MultiDexApplication(), HasAndroidInjector {
 
-    // Instance of the AppComponent that will be used by all the Activities in the project
-    val appComponent: AppComponent by lazy {
-        initializeComponent()!!
-    }
+    @Inject
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
+    override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
     override fun onCreate() {
         super.onCreate()
+        MultiDex.install(this)
         context = applicationContext
+        initDagger()
     }
 
-    fun initializeComponent(): AppComponent? {
-        // Creates an instance of AppComponent using its Factory constructor
-        // We pass the applicationContext that will be used as Context in the graph
-
-        return DaggerAppComponent.factory().create(applicationContext)
+    open fun initDagger() {
+        DaggerAppComponent.builder().application(this).build().inject(this)
+        ///DaggerAppComponent.builder().build().inject(this)
     }
 
     companion object {

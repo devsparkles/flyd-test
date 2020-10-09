@@ -3,16 +3,17 @@ package com.devsparkle.flydapp.presentation.features.shared
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import dagger.android.AndroidInjection
 
 abstract class BaseActivity : AppCompatActivity() {
 
     protected abstract fun initializeViewModel()
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
-    abstract fun daggerInjection()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        daggerInjection()
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initViewBinding()
         initializeViewModel()

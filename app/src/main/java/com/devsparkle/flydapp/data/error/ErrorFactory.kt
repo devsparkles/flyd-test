@@ -1,4 +1,5 @@
-package com.devsparkle.flydapp.presentation.framework.error
+package com.devsparkle.flydapp.data.error
+
 
 
 interface ErrorFactory {
