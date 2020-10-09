@@ -13,7 +13,7 @@ class RemoteAlbumRepository @Inject constructor(
 ) : RemoteAlbumRepositorySource {
 
     override fun getAlbumsByName(name: String): Single<List<AlbumDTO>> {
-        return api.searchAlbumByName(name).map {
+        return api.searchAlbumByName(name,"").map {
             mapper.albumResponseToDTO(it)
         }
     }
