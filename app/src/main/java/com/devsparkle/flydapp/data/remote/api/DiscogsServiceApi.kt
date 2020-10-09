@@ -12,8 +12,8 @@ interface DiscogsServiceApi {
      * Fetch the list of album by release in the api
      * @return
      */
-    @GET("database/search?q={query}&{?release}")
+    @GET("database/search&{?release}")
     fun searchAlbumByName(
-        @Query("query") albumName: String
+        @Query("q") albumName: String
     ): Single<SearchResultResponse>
 }
