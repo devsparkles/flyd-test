@@ -65,6 +65,13 @@ class AlbumActivity : BaseActivity() {
     }
 
     private fun bindListData(albums: List<AlbumDTO>) {
+        if (!(albums.isNullOrEmpty())) {
+            albumsAdapter = AlbumsAdapter(albumViewModel, albums)
+            binding.rvAlbums.adapter = albumsAdapter
+            showDataView(true)
+        } else {
+            showDataView(false)
+        }
     }
 
     private fun handleAlbumsList(status: Resource<List<AlbumDTO>>) {
