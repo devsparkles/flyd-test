@@ -28,6 +28,8 @@ class GetAlbumsUseCase @Inject constructor(
     }
 
     fun saveAlbum(albums: List<AlbumDTO>): Completable {
-        return local.saveAlbums(albums)
+        return local.deleteAlbums().andThen {
+            local.saveAlbums(albums)
+        }
     }
 }

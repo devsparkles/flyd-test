@@ -48,4 +48,12 @@ class AlbumRepository @Inject constructor(
             Completable.complete()
         }
     }
+
+    override fun deleteAlbums(): Completable {
+        return Completable.defer {
+            db.albumDao().delete()
+            Completable.complete()
+        }
+    }
+
 }

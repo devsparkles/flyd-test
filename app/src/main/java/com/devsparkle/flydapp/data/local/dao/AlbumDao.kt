@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.devsparkle.flydapp.data.local.entities.AlbumEntity
 import com.devsparkle.flydapp.data.local.shared.BaseDao
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 
 /**
@@ -13,6 +14,10 @@ import io.reactivex.rxjava3.core.Flowable
  */
 @Dao
 interface AlbumDao : BaseDao<AlbumEntity> {
+
+
+    @Query("DELETE FROM albums")
+    fun delete(): Completable
 
     @Query("SELECT * FROM albums")
     fun getAlbums(): Flowable<List<AlbumEntity>>

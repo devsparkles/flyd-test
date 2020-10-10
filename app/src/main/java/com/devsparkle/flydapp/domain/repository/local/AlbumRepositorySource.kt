@@ -21,4 +21,10 @@ interface AlbumRepositorySource {
      * Save list of album
      */
     fun saveAlbums(albums: List<AlbumDTO>): Completable
+
+
+    /**
+     * Delete album
+     */
+    fun deleteAlbums(): Completable
 }
