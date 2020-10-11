@@ -16,7 +16,7 @@ class AlbumRepository @Inject constructor(
 ) : AlbumRepositorySource {
 
     override fun getAlbums(): Flowable<List<AlbumDTO>> {
-        return db.albumDao().getAlbums()
+        return db.albumDao().loadAllAlbums()
             .map { albumList ->
                 if (albumList.isEmpty()) {
                     emptyList()
@@ -30,7 +30,7 @@ class AlbumRepository @Inject constructor(
 
 
     override fun getAlbumsByName(name: String): Flowable<List<AlbumDTO>> {
-        return db.albumDao().getAlbumsByName(name)
+        return db.albumDao().loadAlbumsByName(name)
             .map { albumList ->
                 if (albumList.isEmpty()) {
                     emptyList()
@@ -51,7 +51,7 @@ class AlbumRepository @Inject constructor(
 
     override fun deleteAlbums(): Completable {
         return Completable.defer {
-            db.albumDao().delete()
+            db.albumDao().deleteAll()
             Completable.complete()
         }
     }

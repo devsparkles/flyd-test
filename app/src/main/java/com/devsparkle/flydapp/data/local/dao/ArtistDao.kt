@@ -15,11 +15,11 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 interface ArtistDao : BaseDao<ArtistEntity> {
     @Query("DELETE FROM artists")
-    fun delete(): Completable
+    fun deleteAll(): Completable
 
     @Query("SELECT count(*) FROM artists")
     fun getCount(): Single<Int>
 
     @Query("SELECT * FROM artists where name=:name")
-    fun getArtistsByName(name: String): Flowable<List<ArtistEntity>>
+    fun loadArtistsByName(name: String): Flowable<List<ArtistEntity>>
 }

@@ -9,7 +9,7 @@ import com.devsparkle.flydapp.data.local.shared.BaseEntity
 data class AlbumEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    val id: Long,
+    var id: Long,
 
     var title: String?,
     var country: String?,
