@@ -1,4 +1,4 @@
-package com.devsparkle.flydapp.data
+package com.devsparkle.flydapp.data.dao
 
 import androidx.room.Room
 import androidx.room.rxjava3.EmptyResultSetException
