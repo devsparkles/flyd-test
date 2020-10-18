@@ -3,7 +3,6 @@ package com.devsparkle.flydapp.presentation.features.album
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.devsparkle.flydapp.FlydApplication
 import com.devsparkle.flydapp.R
 import com.devsparkle.flydapp.data.Resource
 import com.devsparkle.flydapp.databinding.ActivityAlbumBinding
@@ -23,7 +22,6 @@ class AlbumActivity : BaseActivity() {
     @Inject
     lateinit var albumViewModel: AlbumViewModel
 
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -36,10 +34,14 @@ class AlbumActivity : BaseActivity() {
     }
 
     override fun initializeViewModel() {
-         albumViewModel = viewModelFactory.create(AlbumViewModel::class.java)
+        albumViewModel = viewModelFactory.create(AlbumViewModel::class.java)
     }
 
-
+    override fun initViewInteractions() {
+        binding.swiperefresh.setOnRefreshListener {
+            albumViewModel.fetchAlbumByName("a")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,15 +49,20 @@ class AlbumActivity : BaseActivity() {
         val layoutManager = LinearLayoutManager(this)
         binding.rvAlbums.layoutManager = layoutManager
         binding.rvAlbums.setHasFixedSize(true)
-        albumViewModel.getAlbums()
-        albumViewModel.fetchAlbumByName("a")
+        albumsAdapter = AlbumsAdapter(albumViewModel, emptyList())
+        binding.rvAlbums.adapter = albumsAdapter
+    }
 
+    override fun onResume() {
+        super.onResume()
+        albumViewModel.fetchAlbumByName("a")
     }
 
     private fun showDataView(show: Boolean) {
         binding.tvNoData.visibility = if (show) View.GONE else View.VISIBLE
         binding.rvAlbums.visibility = if (show) View.VISIBLE else View.GONE
         binding.pbLoading.toGone()
+        binding.swiperefresh.toGone()
     }
 
     private fun showLoadingView() {

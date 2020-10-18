@@ -7,10 +7,14 @@ import com.devsparkle.flydapp.data.Resource
 import com.devsparkle.flydapp.data.error.DEFAULT_ERROR
 import com.devsparkle.flydapp.domain.dto.AlbumDTO
 import com.devsparkle.flydapp.domain.usecases.album.GetAlbumsUseCase
+import com.devsparkle.flydapp.domain.usecases.album.SaveAlbumsUseCase
 import com.devsparkle.flydapp.presentation.framework.FlydViewModel
 import javax.inject.Inject
 
-class AlbumViewModel @Inject constructor(private val getAlbumsUseCase: GetAlbumsUseCase) :
+class AlbumViewModel @Inject constructor(
+    private val getAlbumsUseCase: GetAlbumsUseCase,
+    private val saveAlbumsUseCase: SaveAlbumsUseCase
+) :
     FlydViewModel() {
 
     /**
@@ -25,45 +29,43 @@ class AlbumViewModel @Inject constructor(private val getAlbumsUseCase: GetAlbums
     val showToast: LiveData<String> get() = showToastPrivate
 
     fun fetchAlbumByName(name: String) {
-        fetch(getAlbumsUseCase.getAlbumListByNameRemote(name),
-            { albums ->
-                complete(getAlbumsUseCase.saveAlbum(albums))
-            },
-            {
-                albumsLiveDataPrivate.value = Resource.DataError(DEFAULT_ERROR)
-            })
+        isConnected({ isConnected ->
+
+            if (isConnected) {
+                  fetch(getAlbumsUseCase.fetchAlbumListByNameRemote(
+                    name
+                ),
+                    { albumsRemote ->
+                        complete(saveAlbumsUseCase.saveAlbum(albumsRemote),
+                            {
+                                albumsLiveDataPrivate.value = Resource.Success(albumsRemote)
+                            })
+                    }, {
+                        albumsLiveDataPrivate.value = Resource.DataError(DEFAULT_ERROR)
+                    })
+            } else {
+                fetch(getAlbumsUseCase.loadAllAlbumsFromDB(),
+                    { albums ->
+                        albumsLiveDataPrivate.value = Resource.Success(albums)
+
+                    },
+                    {
+                        albumsLiveDataPrivate.value = Resource.DataError(DEFAULT_ERROR)
+                    })
+            }
+
+        }, {
+
+        })
     }
 
-
-    fun getAlbums() {
-        albumsLiveDataPrivate.value = Resource.Loading()
-        fetch(getAlbumsUseCase.getAlbumList(),
-            {
-                albumsLiveDataPrivate.value = Resource.Success(it)
-            },
-            {
-                albumsLiveDataPrivate.value = Resource.DataError(DEFAULT_ERROR)
-            })
-    }
-
-
-
-    fun getAlbumsFirstPage(name: String) {
-        albumsLiveDataPrivate.value = Resource.Loading()
-        fetch(getAlbumsUseCase.getAlbumListByName(name),
-            {
-                albumsLiveDataPrivate.value = Resource.Success(it)
-            },
-            {
-                albumsLiveDataPrivate.value = Resource.DataError(DEFAULT_ERROR)
-            })
-    }
-
+    @SuppressWarnings
     fun openAlbumDetails(album: AlbumDTO) {
     }
 
+    @SuppressWarnings
     fun showToastMessage(errorCode: Int) {
         //val error = errorManager.getError(errorCode)
-       // showToastPrivate.value = error.description
+        // showToastPrivate.value = error.description
     }
 }

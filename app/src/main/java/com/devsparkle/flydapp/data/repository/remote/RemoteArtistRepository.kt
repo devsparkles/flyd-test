@@ -3,7 +3,7 @@ package com.devsparkle.flydapp.data.repository.remote
 import com.devsparkle.flydapp.data.Resource
 import com.devsparkle.flydapp.domain.dto.ArtistDTO
 import com.devsparkle.flydapp.domain.repository.remote.RemoteArtistRepositorySource
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import javax.inject.Inject
 
 class RemoteArtistRepository @Inject constructor() : RemoteArtistRepositorySource {

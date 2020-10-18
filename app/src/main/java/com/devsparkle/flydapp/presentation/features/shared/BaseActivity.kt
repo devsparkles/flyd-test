@@ -10,13 +10,14 @@ abstract class BaseActivity : AppCompatActivity() {
     protected abstract fun initializeViewModel()
     abstract fun observeViewModel()
     protected abstract fun initViewBinding()
-
+    protected abstract fun initViewInteractions()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         initViewBinding()
         initializeViewModel()
+        initViewInteractions()
         observeViewModel()
     }
 

@@ -23,6 +23,10 @@ class ArtistActivity : BaseActivity() {
         setContentView(view)
     }
 
+    override fun initViewInteractions() {
+        TODO("Not yet implemented")
+    }
+
     override fun initializeViewModel() {
         artistViewModel = viewModelFactory.create(ArtistViewModel::class.java)
     }

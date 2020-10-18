@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.Date
+
 abstract class BaseEntity : Serializable {
 
     @ColumnInfo(name = "description")

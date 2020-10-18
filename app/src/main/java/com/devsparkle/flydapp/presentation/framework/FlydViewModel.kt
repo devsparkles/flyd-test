@@ -1,13 +1,17 @@
 package com.devsparkle.flydapp.presentation.framework
 
 import androidx.lifecycle.ViewModel
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Maybe
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import com.devsparkle.flydapp.BuildConfig
+import com.github.pwittchen.reactivenetwork.library.rx2.ReactiveNetwork
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.InternetObservingSettings
+import com.github.pwittchen.reactivenetwork.library.rx2.internet.observing.strategy.SocketInternetObservingStrategy
+import io.reactivex.Completable
+import io.reactivex.Flowable
+import io.reactivex.Maybe
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 open class FlydViewModel :
     ViewModel() {
@@ -19,6 +23,20 @@ open class FlydViewModel :
     fun <T> fetch(single: Single<T>, success: (T) -> Unit, error: (Throwable) -> Unit = {}) {
         disposable.add(
             single
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(success, error)
+        )
+    }
+
+    fun isConnected(success: (Boolean) -> Unit, error: (Throwable) -> Unit = {}) {
+        val settings = InternetObservingSettings.builder()
+            .host(BuildConfig.BASE_URL)
+            .strategy(SocketInternetObservingStrategy())
+            .build()
+
+        disposable.add(
+            ReactiveNetwork.checkInternetConnectivity()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(success, error)

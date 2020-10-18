@@ -9,7 +9,7 @@ import dagger.Provides
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
@@ -23,8 +23,6 @@ open class RemoteModule {
     fun provideTokenInterceptor(): TokenInterceptor {
         return TokenInterceptor()
     }
-
-
 
     @Provides
     fun provideOkHttpBuilder(): OkHttpClient.Builder {
@@ -49,7 +47,7 @@ open class RemoteModule {
         return Retrofit.Builder()
             .addConverterFactory(ScalarsConverterFactory.create()) // to allow to get or post scalar type like String for example directly
             .addConverterFactory(GsonConverterFactory.create(gson))
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
     }
 
     @Provides
@@ -60,7 +58,7 @@ open class RemoteModule {
         client.addInterceptor(tokenInterceptor)
         return retrofitBuilder
             .client(client.build())
-            .baseUrl("https://api.discogs.com/")
+            .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
 }

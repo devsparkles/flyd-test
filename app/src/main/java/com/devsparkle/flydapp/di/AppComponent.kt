@@ -5,7 +5,6 @@ import com.devsparkle.flydapp.FlydApplication
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
@@ -18,7 +17,7 @@ import javax.inject.Singleton
         ActivityModuleBuilder::class, ViewModelModule::class
     ]
 )
-interface AppComponent{
+interface AppComponent {
     @Component.Builder
     interface Builder {
 

@@ -31,11 +31,11 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         // export the room schema, so we can use it for testing
-       /* javaCompileOptions {
+        javaCompileOptions {
             annotationProcessorOptions {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
-        }*/
+        }
     }
 
 
@@ -93,7 +93,7 @@ dependencies {
 
     // support and UI
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'com.google.android.material:material:1.2.1'
 
     // kotlin
@@ -102,7 +102,7 @@ dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
 
     // test
-    testImplementation 'junit:junit:4.13'
+    testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     testImplementation 'org.mockito:mockito-core:3.3.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -114,7 +114,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava3:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     def okhttp_version = "4.9.0"
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -122,7 +122,7 @@ dependencies {
     testImplementation "com.squareup.okhttp3:mockwebserver:$okhttp_version"
 
     // json
-    implementation "com.squareup.moshi:moshi:1.9.3"
+    implementation 'com.squareup.moshi:moshi:1.11.0'
 
 
     // lifecycle
@@ -148,15 +148,15 @@ dependencies {
 
 
     // room - orm, model, database
-    def room_version = "2.3.0-alpha02"
+    def room_version = "2.3.0-alpha03"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     testImplementation "androidx.room:room-testing:$room_version"
-    implementation "androidx.room:room-rxjava3:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
 
     // navigation
-    def nav_version = "2.3.0"
+    def nav_version = "2.3.1"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
@@ -173,16 +173,13 @@ dependencies {
     // facebook way to detect the connectivity situation of the device
     implementation 'com.facebook.network.connectionclass:connectionclass:1.0.1'
 
-    implementation 'com.airbnb.android:lottie:3.4.2'
-
-
-    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.8'
+    implementation 'com.airbnb.android:lottie:3.4.4'
 
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
 
     // debugImplementation because LeakCanary should only run in debug builds.
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
 
 
     // chuck chucker for http logging inspection
@@ -194,12 +191,16 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
 
-    implementation "io.reactivex.rxjava3:rxjava:3.0.6"
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.20"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
 
-    def picassoVersion = '2.71828'
+    def picasso_version = '2.71828'
 
     //picasso
-    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    implementation "com.squareup.picasso:picasso:$picasso_version"
+
+
+
+    implementation 'com.github.pwittchen:reactivenetwork-rx2:3.0.8'
 }

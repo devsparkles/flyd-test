@@ -5,8 +5,9 @@ import com.devsparkle.flydapp.data.mapper.FromDTOtoEntity
 import com.devsparkle.flydapp.data.mapper.FromEntityToDTO
 import com.devsparkle.flydapp.domain.dto.AlbumDTO
 import com.devsparkle.flydapp.domain.repository.local.AlbumRepositorySource
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.Completable
+import io.reactivex.Flowable
+
 import javax.inject.Inject
 
 class AlbumRepository @Inject constructor(
@@ -15,7 +16,7 @@ class AlbumRepository @Inject constructor(
     private var mapper2: FromDTOtoEntity
 ) : AlbumRepositorySource {
 
-    override fun getAlbums(): Flowable<List<AlbumDTO>> {
+    override fun loadAlbums(): Flowable<List<AlbumDTO>> {
         return db.albumDao().loadAllAlbums()
             .map { albumList ->
                 if (albumList.isEmpty()) {
@@ -28,9 +29,8 @@ class AlbumRepository @Inject constructor(
             }
     }
 
-
-    override fun getAlbumsByName(name: String): Flowable<List<AlbumDTO>> {
-        return db.albumDao().loadAlbumsByName(name)
+    override fun loadAlbumsByName(name: String): Flowable<List<AlbumDTO>> {
+        return db.albumDao().loadAlbumsByName(name = "%$name%")
             .map { albumList ->
                 if (albumList.isEmpty()) {
                     emptyList()
@@ -42,18 +42,11 @@ class AlbumRepository @Inject constructor(
             }
     }
 
-    override fun saveAlbums(albums: List<AlbumDTO>): Completable {
-        return Completable.defer {
-            db.albumDao().insertAll(mapper2.albumDTOtoEntityAll(albums))
-            Completable.complete()
-        }
+    override fun persistAlbums(albums: List<AlbumDTO>): Completable {
+        return db.albumDao().insertAll(mapper2.albumDTOtoEntityAll(albums))
     }
 
-    override fun deleteAlbums(): Completable {
-        return Completable.defer {
-            db.albumDao().deleteAll()
-            Completable.complete()
-        }
+    override fun deleteAlbums() {
+        return db.albumDao().deleteAll()
     }
-
 }

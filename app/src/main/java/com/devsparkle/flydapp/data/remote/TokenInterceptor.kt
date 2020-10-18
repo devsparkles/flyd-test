@@ -1,11 +1,10 @@
 package com.devsparkle.flydapp.data.remote
 
 import com.devsparkle.flydapp.BuildConfig
-import dagger.Provides
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class TokenInterceptor constructor() : Interceptor {
+class TokenInterceptor : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val key = BuildConfig.KEY

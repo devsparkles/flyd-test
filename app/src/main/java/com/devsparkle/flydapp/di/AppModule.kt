@@ -1,9 +1,7 @@
 package com.devsparkle.flydapp.di
 
 import android.app.Application
-import android.content.Context
 import androidx.room.Room
-import com.devsparkle.flydapp.FlydApplication
 import com.devsparkle.flydapp.data.local.FlydDatabase
 import com.devsparkle.flydapp.data.mapper.FromDTOtoEntity
 import com.devsparkle.flydapp.data.mapper.FromEntityToDTO
@@ -19,15 +17,20 @@ import javax.inject.Singleton
 @Module
 class AppModule {
 
+    /* @Provides
+     @Singleton
+     fun provideNetworkDetection(context: Context): NetworkDetection {
+         return NetworkDetection(context)
+     }
+     @Provides
+     internal fun provideContext(application: FlydApplication): Context? {
+         return application.applicationContext
+     }*/
+
     @Provides
     @Singleton
     fun provideApplicationApiService(retrofit: Retrofit): DiscogsServiceApi {
         return retrofit.create(DiscogsServiceApi::class.java)
-    }
-
-    @Provides
-    internal fun provideContext(application: FlydApplication): Context? {
-        return application.applicationContext
     }
 
     @Provides

@@ -26,7 +26,7 @@ class FlydApplication : MultiDexApplication(), HasAndroidInjector {
         setupDebugUtils()
     }
 
-    open fun initDagger() {
+    fun initDagger() {
         DaggerAppComponent.builder().application(this).build().inject(this)
     }
 

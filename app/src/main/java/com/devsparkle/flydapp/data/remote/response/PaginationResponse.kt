@@ -8,5 +8,4 @@ data class PaginationResponse(
     @SerializedName("per_page") var perPage: String?,
     @SerializedName("items") var items: String?,
     @SerializedName("urls") var urls: UrlsResponse?,
-) {
-}
+)

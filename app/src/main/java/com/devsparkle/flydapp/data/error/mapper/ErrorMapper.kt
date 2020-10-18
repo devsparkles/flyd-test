@@ -16,8 +16,8 @@ class ErrorMapper @Inject constructor() : ErrorMapperInterface {
 
     override val errorsMap: Map<Int, String>
         get() = mapOf(
-                Pair(NO_INTERNET_CONNECTION, getErrorString(R.string.no_internet)),
-                Pair(NETWORK_ERROR, getErrorString(R.string.network_error)),
-                Pair(SEARCH_ERROR, getErrorString(R.string.search_error))
+            Pair(NO_INTERNET_CONNECTION, getErrorString(R.string.no_internet)),
+            Pair(NETWORK_ERROR, getErrorString(R.string.network_error)),
+            Pair(SEARCH_ERROR, getErrorString(R.string.search_error))
         ).withDefault { getErrorString(R.string.network_error) }
 }
